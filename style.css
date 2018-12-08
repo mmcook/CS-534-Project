@@ -1,3 +1,51 @@
-body {
-    background-color: lightblue;;
+img { 
+    border-radius: 50%;
+    padding:25px;
+}
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Arvo';
+    font-size: 22px;
+    background-color: lightblue;
+}
+.start, .process, .results {
+    /* Full height */
+    height: 100%;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.start {
+    /* The image used */
+    background-image: url('http://wallsdesk.com/wp-content/uploads/2016/12/Conan-Obrien-Images.jpg');
+}
+.text {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    color:#000;
+}
+.border {
+    background-color: #111;
+    color: #fff;
+    padding: 18px;
+
+}
+.intro {
+    color: #777;
+    background-color:black;
+    text-align:center;
+    padding:50px 80px;
+    text-align: justify;
+}
+.authors {
+    color: #777;
+    background-color:black;
+    text-align: center;
 }
