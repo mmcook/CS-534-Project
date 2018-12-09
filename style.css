@@ -1,4 +1,4 @@
-img { 
+#face { 
     border-radius: 50%;
     padding:25px;
 }
@@ -26,7 +26,16 @@ body, html {
 .process {
     color: #fff;  
     text-align: center;
-    background-image: url("flowchart-1.jpg");
+    /* background-image: url("flowchart-1.jpg"); */
+}
+.flow {
+    width: 50%;
+    float: left;
+}
+.flowchart{
+    max-width: 50%;
+    max-height: 50%;
+    float: left;
 }
 .results {
     background-image: url("https://i1.wp.com/www.fiz-x.com/wp-content/uploads/2016/03/Minimalist-Desktop-Wallpapers-46.jpg?fit=1920%2C1080&ssl=1");
@@ -54,6 +63,7 @@ body, html {
     width: 100%;
     text-align: center;
     color:#fff;
+    
 }
 .textTwo {
     position: relative;
