@@ -71,6 +71,10 @@ function [final_img, e_trans,r_trans] = ageDetect(img)
         end    
     end
     
+    if sum(ageGroup) == 0
+        return
+    end
+    
     % Annotate face on each image based on age group (ignore faces that we
     % could not classify)
     final_img = img;
