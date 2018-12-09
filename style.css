@@ -26,7 +26,6 @@ body, html {
 .process {
     color: #fff;  
     text-align: center;
-    /* background-image: url("flowchart-1.jpg"); */
 }
 .flow {
     width: 50%;
@@ -38,9 +37,9 @@ body, html {
     float: left;
 }
 .results {
-    background-image: url("https://i1.wp.com/www.fiz-x.com/wp-content/uploads/2016/03/Minimalist-Desktop-Wallpapers-46.jpg?fit=1920%2C1080&ssl=1");
+    background-image: url("https://wallpaper-house.com/data/out/8/wallpaper2you_244274.jpg");
     text-align: center;
-    color:#fff;
+    color:#777;
 }
 .limitations {
     margin: 0%;
@@ -95,5 +94,10 @@ body, html {
 .authors {
     color: #777;
     background-color:black;
+    text-align: center;
+}
+.resultImage {
+    height: 400px;
+    width: 400px;
     text-align: center;
 }
