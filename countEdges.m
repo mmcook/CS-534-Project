@@ -1,38 +1,34 @@
-function edgeNum = countEdges(I)
+function edgeNum = countEdges(img, bbox_faces)
 % Calculate the amount of edges (which positively correlates with age due 
-% to wrinkles on face) by performing a Canny edge detection on the face.
+% to the amount of wrinkles which increases with age) by performing a Canny
+% edge detection on the face.
 % We will use the method presented in the paper "Estimating The Age of
 % Human Face In Image Processing Using Matlab"
 %
 % INPUT:
-% 
+%   img = The image given by user
+%   bbox_faces = The matrix which contains the x-cord, y-cord, width,
+%       the height of the face of the image. By selecting the face, we 
+%       reduce amount of noise and objects other than the face (such as 
+%       hair, clothing, background) which can alter the results
 % OUTPUT:
-%
-    edgeNum = 0;
-   
-    %Detect face using Viola-Jones algorithm
-    faceDetector = vision.CascadeObjectDetector;
-    %Contains x-cord, y-cord, width, height of the location of the face in
-    %an image.
-    bbox_faces = faceDetector(I);
+%   edgeNum = The total number of edges in an image. One edge object is a
+%       connected component by 8.
+%       It will return 0 if there are any errors.
+%   e_trans = List of images depicting the transformation steps to retrieve
+%       the numer of edge objects within received image.
     
+    edgeNum = 0;
     if size(bbox_faces,1) == 0
         return
     end
     
-    % Crop the image to just the face, so we can limit the edges we count to
-    % only that of the face (remove unnecessary objects from background)
-    m = 0;
-    ind = 0;
-    for i = 1:size(bbox_faces,1)
-        if bbox_faces(i,3) * bbox_faces(i,4) > m
-            m = bbox_faces(i,3) * bbox_faces(i,4);
-            ind = i;
-        end
-    end
-    tenPercent = fix(bbox_faces(ind,3) * 0.1);
-    face = imcrop(I, [bbox_faces(ind,1)+tenPercent, bbox_faces(ind,2), ... 
-                    bbox_faces(ind,3)-2*tenPercent, bbox_faces(ind,4)]);
+    % Additionally crop another 10 percent of the face vertically to
+    % remove additional background/hair/noise from image which can alter
+    % the result
+    tenPercent = fix(bbox_faces(1,3) * 0.1);
+    face = imcrop(img, [bbox_faces(1,1)+tenPercent, bbox_faces(1,2), ... 
+                    bbox_faces(1,3)-2*tenPercent, bbox_faces(1,4)]);
 %     figure; imshow(face);
     
     %Convert RGB image to grayscale
@@ -44,6 +40,7 @@ function edgeNum = countEdges(I)
 
     %Use a median filter to reduce the amount of noise in the image
     filterImg = medfilt2(bw);
+%     figure; imshow(filterImg);
 
     %Use a Canny Edge Detector 
     edgeImg = edge(filterImg, 'canny', 0.1);
