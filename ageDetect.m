@@ -1,7 +1,9 @@
-function final_img = ageDetect(img)
+function [final_img, e_trans,r_trans] = ageDetect(img)
 % We will attempt to determine the age of a person using the number of
 % edge objects and the ratio of different parts of faces given by
-% countEdges and faceRatio function. Then, 
+% countEdges and faceRatio function. Then, we use the Median Absolute
+% Deviation to determine if the range to classify the age group for the
+% face. 
 %
 % INPUT:
 %   img = The image given by user
@@ -38,8 +40,8 @@ function final_img = ageDetect(img)
     % Classify the age group of each face in the picture
     for i = 1:size(bbox_faces, 1)
         % Calculate number of edges and the different ratios of the face
-        e = countEdges(img, bbox_faces(i,:));
-        r = faceRatio(img, bbox_faces(i,:));
+        [e, e_trans] = countEdges(img, bbox_faces(i,:));
+        [r, r_trans] = faceRatio(img, bbox_faces(i,:));
 
         % If you cannot detect the edges/ratio correctly, continue to next
         % loop iteration (leave as 0)

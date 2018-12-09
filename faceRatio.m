@@ -1,4 +1,4 @@
-function ratio = faceRatio(img, bbox_faces)
+function [ratio, r_trans] = faceRatio(img, bbox_faces)
 % The ratios used are taken from "Age Classification from Facial Images" 
 % (we decided not to collect Ratio 1 and 4, because the nose and mouth
 % classifier can confuse between nose and mouth.
@@ -21,6 +21,7 @@ function ratio = faceRatio(img, bbox_faces)
 
     % We will collect Ratio 2, Ratio 3, Ratio 5, Ratio 6 from the paper
     ratio = zeros(4,1);
+    r_trans = {};
     if size(bbox_faces,1) == 0
         return;
     end
@@ -75,39 +76,44 @@ function ratio = faceRatio(img, bbox_faces)
     lips = [bbox_mouth(ind,1), bbox_mouth(ind,2)+bbox_mouth(ind,4)/2, ...
             bbox_mouth(ind,3), bbox_mouth(ind,4)];
     
-    % Calculate ratios using the values of eyes, mouth and face
+    % Calculate ratios using the values of eyes, mouth and face, then store
+    % the annotated images
     % left eye - right eye & eye - mouth (Ratio 2)
     ratio(1,1) =  abs(eyes(1,2) - lips(1,2)) / eyes(1,3);
-%     figure; hold on;
-%     imshow(img2);
-%     line([eyes(1,1), eyes(1,1)],[eyes(1,2), lips(1,2)], 'LineWidth', 0.75);
-%     line([eyes(1,1), eyes(1,3) + eyes(1,1)], [eyes(1,2), eyes(1,2)], ...
-%         'Color', 'r', 'LineWidth', 0.75);
+    fh1 = figure(); hold on;
+    imshow(img2);
+    line([eyes(1,1), eyes(1,1)],[eyes(1,2), lips(1,2)], 'LineWidth', 0.75);
+    line([eyes(1,1), eyes(1,3) + eyes(1,1)], [eyes(1,2), eyes(1,2)], ...
+        'Color', 'r', 'LineWidth', 0.75);
+    r_trans{1,1} = saveAnnotatedImg(fh1);
     
     % left eye-right eye & eye-chin (Ratio 3)
     ratio(2,1) =  eyes(1,3)/ abs(size(img2, 1) - eyes(1,2));
-%     figure; hold on; 
-%     imshow(img2);
-%     line([eyes(1,1), eyes(1,3) + eyes(1,1)], [eyes(1,2), eyes(1,2), ...
-%             'LineWidth', 0.75]);
-%     line([eyes(1,1), eyes(1,1)], [eyes(1,2), size(img2,1), 'Color', 'r',...
-%             'LineWidth', 0.75]);
+    fh2 = figure(); hold on; 
+    imshow(img2);
+    line([eyes(1,1), eyes(1,3) + eyes(1,1)], [eyes(1,2), eyes(1,2)], ...
+            'LineWidth', 0.75);
+    line([eyes(1,1), eyes(1,1)], [eyes(1,2), size(img2,1)], 'Color', 'r',...
+            'LineWidth', 0.75);
+    r_trans{1,2} = saveAnnotatedImg(fh2);
     
     % eye-mouth & eye-chin (Ratio 5)
     ratio(3,1) = abs(eyes(1,2) - lips(1,2)) / abs(size(img2, 1)-eyes(1,2));
-%     figure; hold on;
-%     imshow(img2);
-%     line([eyes(1,1), eyes(1,1)],[eyes(1,2), lips(1,2)],'LineWidth', 0.75);
-%     line([eyes(1,3)+eyes(1,1),eyes(1,3)+eyes(1,1)],...
-%             [eyes(1,2),size(img2,1)],'Color', 'r','LineWidth', 0.75);
+    fh3 = figure(); hold on;
+    imshow(img2);
+    line([eyes(1,1), eyes(1,1)],[eyes(1,2), lips(1,2)],'LineWidth', 0.75);
+    line([eyes(1,3)+eyes(1,1),eyes(1,3)+eyes(1,1)],...
+            [eyes(1,2),size(img2,1)],'Color', 'r','LineWidth', 0.75);
+    r_trans{1,3} = saveAnnotatedImg(fh3);
     
     % eye-chin & forehead-chin (Ratio 6)
     ratio(4,1) = eyes(1,2) / size(img2, 1); 
-%     figure; hold on;
-%     imshow(img2);
-%     line([eyes(1,1), eyes(1,1)],[eyes(1,2), size(img2,1)],'LineWidth',0.75);
-%     line([eyes(1,3) + eyes(1,1),eyes(1,3) + eyes(1,1)],...
-%             [size(img2,1),0], 'Color', 'r','LineWidth', 0.75);
+    fh4 = figure(); hold on;
+    imshow(img2);
+    line([eyes(1,1), eyes(1,1)],[eyes(1,2), size(img2,1)],'LineWidth',0.75);
+    line([eyes(1,3) + eyes(1,1),eyes(1,3) + eyes(1,1)],...
+            [size(img2,1),0], 'Color', 'r','LineWidth', 0.75);
+    r_trans{1,4} = saveAnnotatedImg(fh4);
     
 %     disp(ratio);
 end

@@ -1,4 +1,4 @@
-function edgeNum = countEdges(img, bbox_faces)
+function [edgeNum, e_trans] = countEdges(img, bbox_faces)
 % Calculate the amount of edges (which positively correlates with age due 
 % to the amount of wrinkles which increases with age) by performing a Canny
 % edge detection on the face.
@@ -19,6 +19,7 @@ function edgeNum = countEdges(img, bbox_faces)
 %       the numer of edge objects within received image.
     
     edgeNum = 0;
+    e_trans = {};
     if size(bbox_faces,1) == 0
         return
     end
@@ -30,20 +31,25 @@ function edgeNum = countEdges(img, bbox_faces)
     face = imcrop(img, [bbox_faces(1,1)+tenPercent, bbox_faces(1,2), ... 
                     bbox_faces(1,3)-2*tenPercent, bbox_faces(1,4)]);
 %     figure; imshow(face);
+    e_trans{1,1} = face;
     
     %Convert RGB image to grayscale
     grayImg = rgb2gray(face);
+    e_trans{1,2} = grayImg;
     
     %Convert grayscale image to binary to make edge detection easier
     bw = im2bw(grayImg, 0.5);
+    e_trans{1,3} = bw;
 %     figure; imshow(bw);
 
     %Use a median filter to reduce the amount of noise in the image
     filterImg = medfilt2(bw);
+    e_trans{1,4} = filterImg;
 %     figure; imshow(filterImg);
 
     %Use a Canny Edge Detector 
     edgeImg = edge(filterImg, 'canny', 0.1);
+    e_trans{1,5} = edgeImg;
 %     figure; imshow(edgeImg)
     
     % Count the number of edges in terms of 8-connected components

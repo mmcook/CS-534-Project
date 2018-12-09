@@ -69,7 +69,7 @@ function trainSampleData()
                     ind = k;
                 end
             end
-            edge = countEdges(img, bbox_faces(ind,:));
+            [edge, ~] = countEdges(img, bbox_faces(ind,:));
             
             % Only include the successful results into the collection
             if edge ~= 0
@@ -100,7 +100,7 @@ function trainSampleData()
             % Contains x-cord, y-cord, width, height of the location of the face in
             % an image.
             bbox_faces = faceDetector(img); 
-            orig_ratio = faceRatio(img,bbox_faces(1,:));
+            [orig_ratio, ~] = faceRatio(img,bbox_faces(1,:));
             if sum(orig_ratio) ~= 0
                 r = [r orig_ratio];
                 numRatios = numRatios + 1;
