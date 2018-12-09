@@ -6,8 +6,8 @@ function trainSampleData()
     fprintf("Begin training based on sample data...\n");
 
     data = load('data.mat');
-    edges = data.edges;
-    ratio = data.ratio;
+    edges = zeros(3,2)
+    ratio = zeros(3,8);
 
     sampleFileName = 'sample';
     topLevelFolder = sampleFileName;
@@ -38,48 +38,54 @@ function trainSampleData()
        numberOfImageFiles = length(baseFileNames);
        
         %Store number of edges for each image, then sort by ascending order
-%         e = zeros(1, numberOfImageFiles);
         e = [];
+        numEdges = 0;
         for j = 1:numberOfImageFiles
             img = fullfile(thisFolder, baseFileNames(j).name);
             img = imread(img);
             edge = countEdges(img);
             if edge ~= 0
                 e = [e edge];
+                numEdges = numEdges + 1;
             end
         end
-        av_edge = sum(e) / size(e,2);
-        
-        % Find the upper quantile and lower quantile of the number of edges
+        % Find the median and the Median absolute deviation number of edges
         % within the age group
-%         lower = fix((numberOfImageFiles + 1) / 4);
-%         upper = fix(3 * (numberOfImageFiles + 1) / 4);
-        edges(i-1,1) = av_edge;
-%         edges(i-1,2) = E(1,upper);
-%         
+%         edges(i-1,1) = sum(e) / size(e,2);
+        if rem(numEdges, 2) == 1
+            edgeMedian = (numEdges + 1) / 2;
+        else
+            edgeMedian = numEdges/2 + 1;
+        end
+        E = sort(e);
+        edges(i-1,1) = E(1,edgeMedian);
+        edges(i-1,2) = mad(E,1);
+        
         %Do the same process above for face ratios
-%         r = zeros(4, numberOfImageFiles);
         r = [];
+        numRatios = 0;
         for j = 1:numberOfImageFiles
             img = fullfile(thisFolder, baseFileNames(j).name);
             img = imread(img);
             orig_ratio = faceRatio(img);
             if sum(orig_ratio) ~= 0
                 r = [r orig_ratio];
-%                 disp(r);
+                numRatios = numRatios + 1;
             end
         end
-        for j = 1:4
-            ratio(i-1,j) = sum(r(j,:)) / size(r,2);
+        
+        if rem(numRatios, 2) == 1
+            ratioMedian = (numRatios + 1) / 2;
+        else
+            ratioMedian = numRatios/2 + 1;
         end
-%         av_ratio = sum(r,) / size(r,2);
-%         ratio(i-1,:) = av_ratio(1,:);
-        % Sort each row of the collection of ratios
-%         R = sort(r,2);
-%         for j = 1:4
-%             ratio(i-1, j*2-1) = R(j,lower);
-%             ratio(i-1, j*2) = R(j,upper);
-%         end
+        R = sort(r,2);
+        
+        for j = 1:4
+%             ratio(i-1,j) = sum(r(j,:)) / size(r,2);
+            ratio(i-1,j*2-1) = R(j,ratioMedian);
+            ratio(i-1,j*2) = mad(r(j,:),1);
+        end
     end
 %     disp(edges);
 %     disp(ratio);

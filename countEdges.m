@@ -30,8 +30,10 @@ function edgeNum = countEdges(I)
             ind = i;
         end
     end
-    face = imcrop(I, [bbox_faces(ind,1), bbox_faces(ind,2), ... 
-                    bbox_faces(ind,3), bbox_faces(ind,4)]);
+    tenPercent = fix(bbox_faces(ind,3) * 0.1);
+    face = imcrop(I, [bbox_faces(ind,1)+tenPercent, bbox_faces(ind,2), ... 
+                    bbox_faces(ind,3)-2*tenPercent, bbox_faces(ind,4)]);
+%     figure; imshow(face);
     
     %Convert RGB image to grayscale
     grayImg = rgb2gray(face);
