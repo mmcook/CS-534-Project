@@ -30,19 +30,38 @@
         <div class="textOne">
             <h3>Process</h3>
             <img class = "flowchart" src="flowchart-1.jpg" >
-            <span class="flow">frfrfrfrfrf</span>     
+            <span class="flow">The calculation of face ratio comes from <i>Age Classification from Facial Images</i><br>
+                <br><br>
+                <img src="faceRatio.PNG" width=400px height=300px>
+                <br>
+                <span class="obama">Ratio:</span>
+                <img src="process2.jpg" class="obama">
+                <img src="process3.jpg" class="obama">
+                <img src="process4.jpg" class="obama">
+                <img src="process5.jpg" class="obama">
+                <br><br><br><br>
+                <span class="obama">Edge:</span>
+                <img src="process1.jpg" class="obama">
+                <img src="process9.jpg" class="obama">
+                <img src="process6.jpg" class="obama">
+                <img src="process7.jpg" class="obama">
+                <img src="process8.jpg" class="obama">
+            </span> 
         </div>
     </div>
 
     <!--limitations section-->
     <div class="limitations">
         <div style="color:#ddd;background-color:#000;text-align:center;padding:50px 80px;text-align: justify;">
-            <h3 style="text-align:center;">LIMITATIONS</h3>
+            <h3 style="text-align:center;"><br><br><br>LIMITATIONS</h3>
             <div class="textTwo">
-                hah<br>
-                frfr<br>
-                grgrgrg<br>
-                ggrhrger4<br>
+               
+
+<p style="text-align: center;">There are several limitations that appear in this method, however.</p>
+<p style="text-align: center;">The face in the picture must be a frontal face. If the face is angled (say, tilted or looking sideways) the Face detector is not trained to detect the image, so this methodology won't work.</p>
+<p style="text-align: center;">Furtheremore certain aspects of the face could affect the result. If a person is wearing glasses in the image, it can prevent the eye detector from finding the eyes, and thus we cannot classify the face to any age group. One common example is a beard or hair on the face, which increases the number of edges and often the program classifies the image as a senior (even though the face could be an adult). See the image below as an example.</p>
+<p style="text-align: center;">We have also noticed that the hair color/skin color also changes the result. If the skin color of the person is either very light or dark, the program often misses the wrinkles or outline on a person's face, which decreases the edge count, and can classify the person as younger than their real age group. One possible solution is to alter the value of the threshold when converting the image from RGB to binary depending on the brightness of the person's skin color.&nbsp;</p>
+<p style="text-align: center;">Finally, if the image resolution of the original image is too big, this increases the amount of edge count, and the program tends to classify the image as senior. This is because a large image resolution would display the individuals skin in more detail (including blemishes), thus there are more objects counted during the edge detection.&nbsp;Some solutions we can do is to resize the image to a lower resolution if we determine it's too high, or change the threshold for edge detection depending on the size of the image.</p>
             </div>
         </div>
     </div>
@@ -50,11 +69,14 @@
     <!--results section-->
     <div class="results">
         <h3 style="text-align:center; color: #fff;"><br><br>RESULTS</h3>
-        <div class="textThree">
-            <img class="resultImage" src="resultImgOne.jpg">
-            <img class="resultImage" src="resultImgTwo.jpg">
-            <img class="resultImage" src="resultImgThree.jpg">
-        </div>
+            <span class="resultImage">
+                <img  src="resultImgOne.jpg" class="resultImage" >
+                <img  src="resultImgTwo.jpg" class="resultImage">
+                <img  src="resultImgThree.jpg" class="resultImage">
+                <br>
+                <img class="resultImage" src="GUI1.PNG">
+                <img class="resultImage" src="GUI2.PNG">
+            </span>
     </div>
 
     <!--authors section-->

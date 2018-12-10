@@ -29,6 +29,8 @@ body, html {
 }
 .flow {
     width: 50%;
+    min-height: 30%;
+    text-align: center;
     float: left;
 }
 .flowchart{
@@ -97,7 +99,13 @@ body, html {
     text-align: center;
 }
 .resultImage {
-    height: 400px;
-    width: 400px;
-    text-align: center;
+    height: 40%;
+    width: 300px;
+    float: center;
+}
+
+.obama {
+    height: 100px;
+    width: 100px;
+    float: left;
 }
